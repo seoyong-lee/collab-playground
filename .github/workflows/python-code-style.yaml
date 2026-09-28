@@ -1,0 +1,30 @@
+name: Python CI with flake8
+
+on:
+  push:
+    branches:
+      - main  # 메인 브랜치에 푸시되었을 때 동작합니다.
+  pull_request:
+    branches:
+      - main  # 메인 브랜치로의 PR에서 동작합니다.
+
+jobs:
+  style-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4  # 현재 저장소를 체크아웃합니다.
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"  # 사용할 파이썬 버전
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+
+    - name: Run flake8
+      run: |
+        flake8 .
