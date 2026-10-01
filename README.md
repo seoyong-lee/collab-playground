@@ -2,34 +2,37 @@
 
 풀스택 17기 **Git/GitHub 협업하기** 실습 레포입니다.
 쓰기 권한이 없는 남의 레포에 **Fork**로 기여하고, 짝과 **코드 리뷰**를 주고받고,
-**GitHub Actions**가 내 PR을 검사하는 과정을 한 번에 해 봅니다.
+**GitHub Actions**가 내 PR을 검사하는 과정을 두 번에 나눠 해 봅니다.
+
+| 실습 | 언제 | 하는 일 |
+|---|---|---|
+| **2-A** Fork · PR · 리뷰 | 4교시 (챕터 3 코드 리뷰) | Fork → 내 파일 추가 → PR 만들기 → 짝과 리뷰 주고받기 |
+| **2-B** CI 실패와 통과 | 6교시 (챕터 5 협업 자동화) | 같은 PR에 규칙을 어긴 커밋 올리기 → ✕ 확인 → 고쳐서 ✓ |
 
 각자 `members/` 폴더에 **자기 파일 하나만** 추가하므로 PR끼리 충돌하지 않습니다.
+2-A에서 만든 PR은 **2-B가 끝날 때까지 머지하지 않고 열어 둡니다.**
 
 ## 준비
 
 - GitHub에 로그인해 둡니다.
 - Windows는 **Git Bash**, Mac은 터미널을 씁니다.
 - 파일은 VS Code로 만들고 고칩니다. PowerShell의 `echo`로 만들면 UTF-16으로 저장되어 CI가 읽지 못합니다.
+- 강사가 정해 준 **짝의 GitHub 아이디**를 메모해 둡니다.
 
-## 실습 순서
+## 실습 2-A · Fork해서 PR 보내고 리뷰하기 (4교시)
 
 | 단계 | 어디서 | 할 일 |
 |---|---|---|
 | 1 | GitHub | 이 레포 오른쪽 위 **Fork** → **Create fork** |
 | 2 | 터미널 | **내 계정의** 복사본을 clone하고 `feat/intro` 브랜치 만들기 |
-| 3 | VS Code | `members/_template.py`를 복사해 `members/<내 아이디>.py`로 저장하고 내용 채우기 |
-| 4 | VS Code | 마지막 줄을 `print(   intro    )`로 바꿔 **일부러 규칙 어기기** |
-| 5 | 터미널 | add · commit · push |
-| 6 | GitHub | **Compare & pull request** → base가 `seoyong-lee/fs17-collab-playground`의 `main`인지 확인 → PR 만들기 |
-| 7 | GitHub | PR 아래 검사 칸이 **✕ style-check**로 바뀌면 **Details**에서 flake8 메시지 읽기 |
-| 8 | VS Code · 터미널 | 공백을 지워 고친 뒤 commit · push → 같은 PR에 커밋이 추가되고 **✓** |
-| 9 | GitHub | 짝의 PR → **Files changed** → 한 줄 이상 코멘트 → **Submit review** |
-| 10 | GitHub | 받은 코멘트에 답하거나 Suggestion을 **Commit suggestion**으로 반영 |
+| 3 | VS Code | `members/_template.py`를 복사해 `members/<내 아이디>.py`로 저장하고 값을 내 정보로 바꾸기 |
+| 4 | 터미널 | add · commit · push |
+| 5 | GitHub | **Compare & pull request** → base가 `seoyong-lee/fs17-collab-playground`의 `main`인지 확인 → PR 만들기 |
+| 6 | GitHub | PR 아래 검사 칸이 **✓ style-check**가 될 때까지 기다리기 (승인 대기 문구가 보이면 강사가 승인합니다) |
+| 7 | GitHub | 짝의 PR → **Files changed** → 한 줄 이상 코멘트 → **Review changes** → **Comment** → **Submit review** |
+| 8 | GitHub | 받은 코멘트에 답하거나 Suggestion을 **Commit suggestion**으로 반영하기 |
 
-강사가 PR을 머지하면 보라색 **Merged**로 바뀝니다.
-
-### 터미널 명령 (2 · 5 · 8단계)
+### 터미널 명령 (2 · 4단계)
 
 ```bash
 cd ~/Desktop
@@ -39,26 +42,56 @@ git remote -v                      # origin이 <내 아이디>인지 확인
 git switch -c feat/intro
 
 cp members/_template.py members/<내 아이디>.py
-# VS Code로 파일을 열어 값을 바꾸고 마지막 줄에 공백 넣기
+# VS Code로 파일을 열어 값을 내 정보로 바꾸고 저장
 
 git add members/
 git commit -m "feat(members): add <내 아이디> intro"
 git push origin feat/intro
-
-# CI ✕ 확인 후 공백을 지우고
-git add members/
-git commit -m "fix(members): remove extra spaces"
-git push origin feat/intro
 ```
+
+### 터미널이 막히면 — 웹에서만 PR 만들기
+
+clone이나 push에서 막혀 시간이 부족하면 브라우저만으로도 같은 PR을 만들 수 있습니다.
+
+1. **내 Fork** 화면에서 `members` 폴더로 들어가 **Add file** → **Create new file**을 누릅니다.
+2. 파일 이름에 `<내 아이디>.py`를 쓰고 `_template.py` 내용을 붙여 넣은 뒤 값을 바꿉니다.
+3. **Commit changes…** → **Create a new branch** 선택 → 브랜치 이름 `feat/intro` → **Propose changes**를 누릅니다.
+4. 이어지는 화면에서 base가 `seoyong-lee/fs17-collab-playground`의 `main`인지 확인하고 **Create pull request**를 누릅니다.
+
+2-B도 같은 방법으로 Fork의 `feat/intro` 브랜치에서 파일을 열어 연필 아이콘으로 고치면 됩니다.
 
 ### PR 만들 때 확인할 것
 
 ```
 base repository: seoyong-lee/fs17-collab-playground   base: main
-head repository: <내 아이디>/fs17-collab-playground       compare: feat/intro
+head repository: <내 아이디>/fs17-collab-playground   compare: feat/intro
 ```
 
-본문은 PR 템플릿이 자동으로 채워 줍니다. 체크리스트의 `[ ]`는 `[x]`로 바꾸면 체크됩니다.
+본문은 PR 템플릿이 자동으로 채워 줍니다. 체크리스트의 `[ ]`를 `[x]`로 바꾸면 체크됩니다.
+
+## 실습 2-B · CI가 막고 고쳐서 통과하기 (6교시)
+
+워크플로우와 CI를 배운 뒤, 2-A에서 열어 둔 **같은 PR**에서 이어 합니다.
+
+| 단계 | 어디서 | 할 일 |
+|---|---|---|
+| 1 | VS Code | 내 파일 마지막 줄을 `print(   intro    )`로 바꿔 **일부러 규칙 어기기** |
+| 2 | 터미널 | add · commit · push → 새 PR이 생기지 않고 기존 PR에 커밋이 추가됨 |
+| 3 | GitHub | 검사 칸이 **✕ style-check**로 바뀌면 **Details**에서 flake8 메시지 읽기 |
+| 4 | VS Code · 터미널 | 괄호 안 공백을 지워 `print(intro)`로 고친 뒤 commit · push → **✓** |
+
+```bash
+git add members/
+git commit -m "feat(members): print intro"
+git push origin feat/intro
+
+# ✕ 확인 후 공백을 지우고
+git add members/
+git commit -m "fix(members): remove extra spaces"
+git push origin feat/intro
+```
+
+강사가 PR을 머지하면 보라색 **Merged**로 바뀝니다.
 
 ## 규칙
 
@@ -75,6 +108,7 @@ head repository: <내 아이디>/fs17-collab-playground       compare: feat/intr
 | push하면 `403` 또는 `Permission denied` | 원본(`seoyong-lee`) 주소를 clone했습니다. `git remote -v`로 확인하고 **내 Fork**를 다시 clone합니다. |
 | PR의 base가 내 레포로 잡힘 | base repository 드롭다운에서 `seoyong-lee/fs17-collab-playground`를 고릅니다. |
 | 검사 칸에 **Waiting for approval** 또는 승인 대기 문구 | 처음 기여하는 계정은 원본 관리자가 실행을 승인해야 CI가 돕니다. 강사가 승인할 때까지 기다립니다. |
+| `E201 whitespace after '('` · `E202 whitespace before ')'` | 2-B에서 일부러 넣은 괄호 안 공백입니다. 공백을 지웁니다. |
 | `W292 no newline at end of file` | 파일 마지막 줄 끝에서 Enter를 한 번 누르고 저장합니다. |
 | `W391 blank line at end of file` | 파일 끝의 빈 줄을 하나만 남깁니다. |
 | `E501 line too long` | 79자를 넘은 줄을 짧게 줄입니다. |
@@ -109,7 +143,7 @@ fs17-collab-playground/
 │       └── python-code-style.yaml  # PR마다 flake8 검사 (job: style-check)
 ├── members/
 │   ├── _template.py                # 복사해서 쓰는 틀
-│   └── seoyong-lee.py                # 예시
+│   └── seoyong-lee.py              # 예시
 ├── INSTRUCTOR.md                   # 강사용 레포 설정
 └── README.md
 ```
