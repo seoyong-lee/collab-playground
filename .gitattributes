@@ -1,3 +1,4 @@
-*.py   text eol=lf
+*.html text eol=lf
 *.md   text eol=lf
 *.yaml text eol=lf
+.htmlhintrc text eol=lf

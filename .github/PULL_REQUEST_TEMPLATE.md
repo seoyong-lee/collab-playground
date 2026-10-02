@@ -1,6 +1,6 @@
 ## PR 요약:
 
-- members/<내 아이디>.py 추가
+- members/<내 아이디>.html 추가
 
 ## 변경 사유:
 

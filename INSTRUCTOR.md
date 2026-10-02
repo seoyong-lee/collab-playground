@@ -20,7 +20,7 @@ git remote add origin https://github.com/seoyong-lee/fs17-collab-playground.git
 git push -u origin main
 ```
 
-3. **Actions** 탭에서 `Python CI with flake8`이 한 번 돌고 ✓가 뜨는지 확인합니다.
+3. **Actions** 탭에서 `HTML CI with HTMLHint`가 한 번 돌고 ✓가 뜨는지 확인합니다.
 
 ## 2. Settings → General
 
@@ -63,12 +63,38 @@ git push -u origin main
 
 ### 실습 2-B (6교시 · 챕터 5 협업 자동화)
 
-1. CI 장을 설명한 뒤 같은 PR에 `print(   intro    )` 커밋을 올리게 합니다.
-2. ✕로 바뀐 PR 하나를 화면에 띄우고 **Details**의 flake8 메시지(`E201` · `E202`)를 함께 읽습니다.
+1. CI 장을 설명한 뒤 같은 PR에 `</p>` 하나를 지운 커밋을 올리게 합니다.
+2. ✕로 바뀐 PR 하나를 화면에 띄우고 **Details**의 HTMLHint 메시지(`Tag must be paired` · `tag-pair`)를 함께 읽습니다. `L12`가 줄 번호, `^`가 위치입니다.
 3. 머지 버튼이 **Merging is blocked**로 막힌 모습을 보여 주고 "CI 통과를 필수로 만들기" 장으로 연결합니다.
 4. ✓로 돌아온 PR은 **Approve** → **Squash and merge**로 합칩니다.
+
+### 6교시 CI 시연 (실습 흐름 장)
+
+슬라이드의 `feat/create-test` 시연용 파일입니다. 이 레포에서 브랜치를 만들어 그대로 씁니다.
+
+```bash
+git switch -c feat/create-test
+# test.html 을 아래 내용으로 만들고 <h1>codeit 뒤의 </h1>을 일부러 뺍니다
+git add test.html
+git commit -m "test: add test.html without closing tag"
+git push origin feat/create-test
+# PR → ✕ 확인 → </h1>을 넣어 다시 push → ✓ → PR은 머지하지 않고 Close
+```
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>CI 테스트</title>
+</head>
+<body>
+  <h1>codeit
+</body>
+</html>
+```
 
 ## 6. 수업 뒤
 
 - 남은 PR은 머지하거나 코멘트를 남기고 닫습니다.
-- 다음 기수에 다시 쓰려면 `members/`에서 `_template.py`와 `seoyong-lee.py`만 남기고 지운 커밋을 push합니다.
+- 다음 기수에 다시 쓰려면 `members/`에서 `_template.html`과 `seoyong-lee.html`만 남기고 지운 커밋을 push합니다.
