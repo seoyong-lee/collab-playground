@@ -5,10 +5,10 @@
 
 ## 1. 레포 만들고 올리기
 
-레포 이름은 `fs17-collab-playground`입니다. 슬라이드와 README가 모두 이 주소를 씁니다.
+레포 이름은 `collab-playground`입니다. 슬라이드와 README가 모두 이 주소를 씁니다.
 이미 레포가 있으면 이름만 확인하고 2번으로 넘어갑니다.
 
-1. GitHub에서 **New** → 이름 `fs17-collab-playground` → **Public** → README 체크 없이 **Create repository**
+1. GitHub에서 **New** → 이름 `collab-playground` → **Public** → README 체크 없이 **Create repository**
 2. 이 폴더에서 아래를 실행합니다.
 
 ```bash
@@ -16,7 +16,7 @@ git init
 git add .
 git commit -m "chore: 협업 실습 레포 초기 세팅"
 git branch -M main
-git remote add origin https://github.com/seoyong-lee/fs17-collab-playground.git
+git remote add origin https://github.com/seoyong-lee/collab-playground.git
 git push -u origin main
 ```
 
